@@ -1,0 +1,52 @@
+# azure-pipelines.yml - configuration for Azure Pipelines
+# Copyright (C) 2020 Kaz Nishimura
+#
+# Copying and distribution of this file, with or without modification, are
+# permitted in any medium without royalty provided the copyright notice and
+# this notice are preserved.  This file is offered as-is, without any warranty.
+---
+variables:
+  deploy.azureSubscription: linuxfront-fm-audio
+  deploy.appName: linuxfront-fm-audio
+trigger:
+  - master
+stages:
+  - stage: Default
+    jobs:
+      - job: Package
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - bash: |
+              for i in index.html resources; do
+                  cp -r $i $(Build.BinariesDirectory)/$i || exit $?
+              done
+            displayName: Copy contents
+          - task: ArchiveFiles@2
+            inputs:
+              includeRootFolder: false
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(deploy.appName).zip
+          - publish: $(Build.ArtifactStagingDirectory)
+            artifact: app
+  - stage: Deployment
+    dependsOn:
+      - Default
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: ubuntu-latest
+        environment: $(deploy.appName)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+                - download: current
+                  artifact: app
+                - task: AzureWebApp@1
+                  inputs:
+                    azureSubscription: $(deploy.azureSubscription)
+                    appType: webApp
+                    appName: $(deploy.appName)
+                    package: $(Agent.BuildDirectory)/app/*.zip
+                    deploymentMethod: zipDeploy
