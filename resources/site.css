@@ -1,0 +1,55 @@
+/* site.css */
+
+html
+{
+    height: 100%;
+}
+
+body
+{
+    height: 100%;
+}
+
+.material-icons
+{
+    vertical-align: text-bottom;
+    font-size: 150%;
+}
+
+.site-hbox
+{
+    display: flex;
+    flex-flow: row;
+}
+
+.site-vbox
+{
+    display: flex;
+    flex-flow: column;
+}
+
+.site-hbox > .site-hbox-grow,
+.site-vbox > .site-vbox-grow
+{
+    flex: auto;
+}
+
+.site-scroll
+{
+    overflow: scroll;
+}
+
+.site-content
+{
+    margin: 12px 12px;
+    max-width: 768px;
+}
+
+@media (min-width: 384px)
+{
+    .site-w-hbox
+    {
+        display: flex;
+        flex-flow: row;
+    }
+}
