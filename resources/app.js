@@ -40,7 +40,7 @@ if (AudioContext == null) {
 
 if ("audioWorklet" in AudioContext.prototype) {
     let audioContext = new AudioContext();
-    audioContext.audioWorklet.addModule("./resources/audio-worklet.js")
+    audioContext.audioWorklet.addModule("./resources/fm-synthesizer.js")
         .then(() => {
             bindCommands();
         });
