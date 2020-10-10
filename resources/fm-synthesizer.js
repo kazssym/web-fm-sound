@@ -33,6 +33,15 @@ const A3_KEY = 69;
 
 class FMOperator
 {
+    constructor()
+    {
+        this._output = 0;
+    }
+
+    get output()
+    {
+        return this._output;
+    }
 }
 
 class FMSynthesizer extends AudioWorkletProcessor
@@ -72,6 +81,12 @@ class FMSynthesizer extends AudioWorkletProcessor
                 if (lastKey != parameters["key"][k]) {
                     lastKey = parameters["key"][k];
                     this._frequency = 440 * Math.pow(2, (lastKey - A3_KEY) / 12);
+                }
+
+                for (let i = 0; i < outputs.length; i++) {
+                    for (let j = 0; j < outputs[i].length; j++) {
+                        outputs[i][j][k] = this._operators[3].output;
+                    }
                 }
             }
         }
