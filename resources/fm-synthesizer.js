@@ -31,6 +31,10 @@
 
 const A3_KEY = 69;
 
+class FMOperator
+{
+}
+
 class FMSynthesizer extends AudioWorkletProcessor
 {
     static get parameterDescriptors()
@@ -49,6 +53,7 @@ class FMSynthesizer extends AudioWorkletProcessor
     {
         super(options);
         this._frequency = 0;
+        this._operators = [0, 1, 2, 3].map(() => new FMOperator());
     }
 
     /**
