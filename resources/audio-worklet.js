@@ -1,4 +1,4 @@
-// app.js
+// audio-worklet.js
 // Copyright (C) 2020 Kaz Nishimura
 //
 // This program is free software: you can redistribute it and/or modify it
@@ -16,35 +16,15 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-// This file is a module script and shall be in strict mode by default.
+/* global sampleRate */
 
 /**
- * ES module for the application.
+ * Module script for the audio worklet processors.
+ * This file must be imported by an
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet AudioWorklet}
+ * object.
  *
- * @module app.js
+ * @module audio-worklet.js
  */
 
-
-/**
- * Binds UI commands.
- */
-function bindCommands()
-{
-}
-
-
-let AudioContext = window.AudioContext;
-if (AudioContext == null) {
-    AudioContext = window.webkitAudioContext;
-}
-
-if ("audioWorklet" in AudioContext.prototype) {
-    let audioContext = new AudioContext();
-    audioContext.audioWorklet.addModule("./resources/audio-worklet.js")
-        .then(() => {
-            bindCommands();
-        });
-}
-else {
-    alert("AudioWorklet support is missing.");
-}
+// This file is a module script and shall be in strict mode by default.
