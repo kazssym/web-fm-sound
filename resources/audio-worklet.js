@@ -28,3 +28,50 @@
  */
 
 // This file is a module script and shall be in strict mode by default.
+
+const A3_KEY = 69;
+
+class FMSynthesizer extends AudioWorkletProcessor
+{
+    static get parameterDescriptors()
+    {
+        return [
+            {
+                name: "key",
+                minValue: 0 - 12,
+                maxValue: 128 + 12,
+                defaultValue: A3_KEY
+            }
+        ];
+    }
+
+    constructor(options)
+    {
+        super(options);
+        this._frequency = 0;
+    }
+
+    /**
+     * Processes audio.
+     *
+     * @param {*} _inputs
+     * @param {*} outputs
+     * @param {*} parameters
+     * @return {boolean}
+     */
+    process(_inputs, outputs, parameters)
+    {
+        if (outputs.length >= 1) {
+            let lastKey = null;
+            for (let k = 0; k < outputs[0][0].length; ++k) {
+                if (lastKey != parameters["key"][k]) {
+                    lastKey = parameters["key"][k];
+                    this._frequency = 440 * Math.pow(2, (lastKey - A3_KEY) / 12);
+                }
+            }
+        }
+        return true;
+    }
+}
+
+registerProcessor("fm-synthesizer", FMSynthesizer);
