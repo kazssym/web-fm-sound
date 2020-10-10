@@ -46,18 +46,6 @@ class FMOperator
 
 class FMSynthesizer extends AudioWorkletProcessor
 {
-    static get parameterDescriptors()
-    {
-        return [
-            {
-                name: "key",
-                minValue: 0 - 12,
-                maxValue: 128 + 12,
-                defaultValue: A3_KEY
-            }
-        ];
-    }
-
     constructor(options)
     {
         super(options);
@@ -70,19 +58,12 @@ class FMSynthesizer extends AudioWorkletProcessor
      *
      * @param {*} _inputs
      * @param {*} outputs
-     * @param {*} parameters
      * @return {boolean}
      */
-    process(_inputs, outputs, parameters)
+    process(_inputs, outputs)
     {
         if (outputs.length >= 1) {
-            let lastKey = null;
             for (let k = 0; k < outputs[0][0].length; ++k) {
-                if (lastKey != parameters["key"][k]) {
-                    lastKey = parameters["key"][k];
-                    this._frequency = 440 * Math.pow(2, (lastKey - A3_KEY) / 12);
-                }
-
                 for (let i = 0; i < outputs.length; i++) {
                     for (let j = 0; j < outputs[i].length; j++) {
                         outputs[i][j][k] = this._operators[3].output;
