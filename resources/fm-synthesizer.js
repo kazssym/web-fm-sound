@@ -33,9 +33,12 @@ const A3_KEY = 69;
 
 class FMOperator
 {
-    constructor()
+    constructor(voice)
     {
+        this._voice = voice;
+
         this._output = 0;
+        this._phase = 0;
     }
 
     get output()
@@ -49,8 +52,10 @@ class FMSynthesizer extends AudioWorkletProcessor
     constructor(options)
     {
         super(options);
-        this._frequency = 0;
-        this._operators = [0, 1, 2, 3].map(() => new FMOperator());
+        this._voice = {
+            phaseIncrement: 440 / sampleRate,
+        };
+        this._operators = [0, 1, 2, 3].map(() => new FMOperator(this._voice));
     }
 
     /**
