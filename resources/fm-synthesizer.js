@@ -36,6 +36,8 @@ class FMOperator
     constructor(voice)
     {
         this._voice = voice;
+        this._frequencyRatio = 1.0;
+        this._amplitude = 1.0;
 
         this._output = 0;
         this._phase = 0;
@@ -44,6 +46,16 @@ class FMOperator
     get output()
     {
         return this._output;
+    }
+
+    advance(input)
+    {
+        if (input == null) {
+            input = 0;
+        }
+        this._output = this._amplitude * Math.sin(this._phase + input);
+        this._phase += this._frequencyRatio * this._voice.phaseIncrement;
+        this._phase -= Math.floor(this._phase);
     }
 }
 
@@ -69,6 +81,9 @@ class FMSynthesizer extends AudioWorkletProcessor
     {
         if (outputs.length >= 1) {
             for (let k = 0; k < outputs[0][0].length; ++k) {
+                for (let i = 0; i < 4; i++) {
+                    this._operators[i].advance(0);
+                }
                 for (let i = 0; i < outputs.length; i++) {
                     for (let j = 0; j < outputs[i].length; j++) {
                         outputs[i][j][k] = this._operators[3].output;
