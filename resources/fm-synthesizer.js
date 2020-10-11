@@ -68,6 +68,12 @@ class FMSynthesizer extends AudioWorkletProcessor
             phaseIncrement: 440 / sampleRate,
         };
         this._operators = [0, 1, 2, 3].map(() => new FMOperator(this._voice));
+        this._connections = [
+            [0, 0, 0, 0],
+            [1, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 1, 0],
+        ];
     }
 
     /**
@@ -82,7 +88,11 @@ class FMSynthesizer extends AudioWorkletProcessor
         if (outputs.length >= 1) {
             for (let k = 0; k < outputs[0][0].length; ++k) {
                 for (let i = 0; i < 4; i++) {
-                    this._operators[i].advance(0);
+                    let input = 0;
+                    for (let j = 0; j < 4; j++) {
+                        input += this._connections[i][j] * this._operators[j].output;
+                    }
+                    this._operators[i].advance(input);
                 }
                 for (let i = 0; i < outputs.length; i++) {
                     for (let j = 0; j < outputs[i].length; j++) {
