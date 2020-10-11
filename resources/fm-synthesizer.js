@@ -48,12 +48,13 @@ class FMOperator
         return this._output;
     }
 
-    advance(input)
+    advance(index)
     {
-        if (input == null) {
-            input = 0;
+        if (index == null) {
+            index = 0;
         }
-        this._output = this._amplitude * Math.sin(2 * Math.PI * (this._phase + input));
+        this._output = this._amplitude
+            * Math.sin(2 * Math.PI * (this._phase + 4 * index));
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
@@ -88,11 +89,11 @@ class FMSynthesizer extends AudioWorkletProcessor
         if (outputs.length >= 1) {
             for (let k = 0; k < outputs[0][0].length; ++k) {
                 for (let i = 0; i < 4; i++) {
-                    let input = 0;
+                    let index = 0;
                     for (let j = 0; j < 4; j++) {
-                        input += this._connections[i][j] * this._operators[j].output;
+                        index += this._connections[i][j] * this._operators[j].output;
                     }
-                    this._operators[i].advance(input);
+                    this._operators[i].advance(index);
                 }
                 for (let i = 0; i < outputs.length; i++) {
                     for (let j = 0; j < outputs[i].length; j++) {
