@@ -24,14 +24,31 @@
  * @module app.js
  */
 
+function sendNoteOn()
+{
+    console.debug("note on");
+}
+
+function sendNoteOff()
+{
+    console.debug("note off");
+}
 
 /**
  * Binds UI commands.
  */
 function bindCommands()
 {
+    for (let e of document.getElementsByClassName("app-command-trigger")) {
+        e.addEventListener("mousedown", sendNoteOn);
+        e.addEventListener("mouseup", sendNoteOff);
+        if (e.disabled) {
+            e.disabled = false;
+        }
+    }
 }
 
+// Initialization.
 
 let AudioContext = window.AudioContext;
 if (AudioContext == null) {
