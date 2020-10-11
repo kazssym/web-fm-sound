@@ -48,20 +48,34 @@ function bindCommands()
     }
 }
 
+/**
+ * Creates a custom AudioContext object.
+ *
+ * @return {Promise<AudioContext>}
+ */
+async function createAudioContext()
+{
+    let AudioContext = window.AudioContext;
+    if (AudioContext == null) {
+        AudioContext = window.webkitAudioContext;
+    }
+
+    if ("audioWorklet" in AudioContext.prototype) {
+        let context = new AudioContext();
+        await context.audioWorklet.addModule("./resources/fm-synthesizer.js");
+        return context;
+    }
+    throw new Error("AudioWorklet support is missing.");
+}
+
 // Initialization.
 
-let AudioContext = window.AudioContext;
-if (AudioContext == null) {
-    AudioContext = window.webkitAudioContext;
-}
-
-if ("audioWorklet" in AudioContext.prototype) {
-    let audioContext = new AudioContext();
-    audioContext.audioWorklet.addModule("./resources/fm-synthesizer.js")
-        .then(() => {
-            bindCommands();
-        });
-}
-else {
-    alert("AudioWorklet support is missing.");
-}
+let audioContext = null;
+createAudioContext()
+    .then((context) => {
+        audioContext = context;
+        bindCommands();
+    })
+    .catch((error) => {
+        alert(error);
+    });
