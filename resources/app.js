@@ -26,11 +26,19 @@
 
 function sendNoteOn()
 {
+    if (audioContext.state == "suspended") {
+        audioContext.resume();
+    }
+
     console.debug("note on");
 }
 
 function sendNoteOff()
 {
+    if (audioContext.state == "suspended") {
+        audioContext.resume();
+    }
+
     console.debug("note off");
 }
 
