@@ -53,7 +53,7 @@ class FMOperator
         if (input == null) {
             input = 0;
         }
-        this._output = this._amplitude * Math.sin(this._phase + input);
+        this._output = this._amplitude * Math.sin(2 * Math.PI * (this._phase + input));
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
