@@ -26,8 +26,8 @@
 
 function sendNoteOn()
 {
-    if (audioContext.state == "suspended") {
-        audioContext.resume();
+    if (synthesizer.context.state == "suspended") {
+        synthesizer.context.resume();
     }
 
     console.debug("note on");
@@ -35,8 +35,8 @@ function sendNoteOn()
 
 function sendNoteOff()
 {
-    if (audioContext.state == "suspended") {
-        audioContext.resume();
+    if (synthesizer.context.state == "suspended") {
+        synthesizer.context.resume();
     }
 
     console.debug("note off");
@@ -78,10 +78,11 @@ async function createAudioContext()
 
 // Initialization.
 
-let audioContext = null;
+let synthesizer = null;
 createAudioContext()
     .then((context) => {
-        audioContext = context;
+        synthesizer = new AudioWorkletNode(context, "fm-synthesizer");
+        synthesizer.connect(context.destination);
         bindCommands();
     })
     .catch((error) => {
