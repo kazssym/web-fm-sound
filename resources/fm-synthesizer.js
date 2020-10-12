@@ -58,6 +58,14 @@ class FMOperator
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
+
+    on()
+    {
+    }
+
+    off()
+    {
+    }
 }
 
 class FMSynthesizer extends AudioWorkletProcessor
