@@ -31,6 +31,11 @@ function sendNoteOn()
     }
 
     console.debug("note on");
+    synthesizer.port.postMessage({
+        noteOn: {
+            key: 69,
+        }
+    });
 }
 
 function sendNoteOff()
@@ -40,6 +45,11 @@ function sendNoteOff()
     }
 
     console.debug("note off");
+    synthesizer.port.postMessage({
+        noteOff: {
+            key: 69,
+        }
+    });
 }
 
 /**
