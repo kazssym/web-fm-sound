@@ -75,6 +75,12 @@ class FMSynthesizer extends AudioWorkletProcessor
             [0, 0, 0, 0],
             [0, 0, 1, 0],
         ];
+
+        // Gets note-ons/offs as messages.
+        this.port.addEventListener("message", (event) => {
+            console.debug(event);
+        });
+        this.port.start();
     }
 
     /**
