@@ -41,6 +41,9 @@ class FMOperator
 
         this._output = 0;
         this._phase = 0;
+        this._on = false;
+        // TODO: make a real envelope generator.
+        this._envelope = 0;
     }
 
     get output()
@@ -53,7 +56,7 @@ class FMOperator
         if (index == null) {
             index = 0;
         }
-        this._output = this._amplitude
+        this._output = this._amplitude * this._envelope
             * Math.sin(2 * Math.PI * (this._phase + 4 * index));
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
@@ -61,10 +64,14 @@ class FMOperator
 
     on()
     {
+        this._on = true;
+        this._envelope = 1.0;
     }
 
     off()
     {
+        this._on = false;
+        this._envelope = 0;
     }
 }
 
