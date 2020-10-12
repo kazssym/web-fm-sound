@@ -41,7 +41,7 @@ class FMOperator
 
         this._output = 0;
         this._phase = 0;
-        this._on = false;
+        this._started = false;
         // TODO: make a real envelope generator.
         this._envelope = 0;
     }
@@ -62,15 +62,15 @@ class FMOperator
         this._phase -= Math.floor(this._phase);
     }
 
-    on()
+    start()
     {
-        this._on = true;
+        this._started = true;
         this._envelope = 1.0;
     }
 
-    off()
+    stop()
     {
-        this._on = false;
+        this._started = false;
         this._envelope = 0;
     }
 }
@@ -96,9 +96,17 @@ class FMSynthesizer extends AudioWorkletProcessor
             console.debug("data = %o", event.data);
             if ("noteOn" in event.data) {
                 console.debug("received a note-on");
+                this._operators
+                    .forEach((o) => {
+                        o.start();
+                    });
             }
             if ("noteOff" in event.data) {
                 console.debug("received a note-off");
+                this._operators
+                    .forEach((o) => {
+                        o.stop();
+                    });
             }
         });
         this.port.start();
