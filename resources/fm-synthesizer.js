@@ -53,13 +53,42 @@ class FMOperator
     }
 
     /**
-     * Index given to the constructor.
+     * Index of this operator given to the constructor.
      */
     get index()
     {
         return this._index;
     }
 
+    /**
+     * Amplitude of this operator.
+     */
+    get amplitude()
+    {
+        return this._amplitude;
+    }
+
+    set amplitude(amplitude)
+    {
+        this._amplitude = amplitude;
+    }
+
+    /**
+     * Frequency multiple of this operator.
+     */
+    get multiple()
+    {
+        return this._multiple;
+    }
+
+    set multiple(multiple)
+    {
+        this._multiple = multiple;
+    }
+
+    /**
+     * Output of this operator.
+     */
     get output()
     {
         return this._output;
