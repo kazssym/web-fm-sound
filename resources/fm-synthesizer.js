@@ -101,7 +101,7 @@ class FMSynthesizer extends AudioWorkletProcessor
         this._operators = [0, 1, 2, 3]
             .map((index) => new FMOperator(index, this._voice));
 
-        this._connections = [
+        this._connection = [
             [0, 0, 0, 0],
             [1, 0, 0, 0],
             [0, 0, 0, 0],
@@ -152,7 +152,7 @@ class FMSynthesizer extends AudioWorkletProcessor
                 for (let i = 0; i < 4; i++) {
                     let index = 0;
                     for (let j = 0; j < 4; j++) {
-                        index += this._connections[i][j] * this._operators[j].output;
+                        index += this._connection[i][j] * this._operators[j].output;
                     }
                     this._operators[i].advance(index);
                 }
