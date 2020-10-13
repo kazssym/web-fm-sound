@@ -72,18 +72,6 @@ class FMOperator
         }
         this._output = this._amplitude * this._envelope
             * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
-        if (Number.isNaN(this._output)) {
-            if (!this._once) {
-                this._once = true;
-                console.debug("NaN in advance");
-                console.debug("modulation = %f", modulation);
-                console.debug("phase = %f", this._phase);
-                console.debug("amplitude = %f", this._amplitude);
-                console.debug("envelope = %f", this._envelope);
-                console.debug("phaseIncrement = %f", this._voice.phaseIncrement);
-            }
-            this._output = 0;
-        }
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
@@ -173,9 +161,6 @@ class FMSynthesizer extends AudioWorkletProcessor
 
                 let output = 0.125 * this._operators
                     .reduce((x, o) => x + this._mix[o.index] * o.output, 0);
-                if (Number.isNaN(output)) {
-                    output = 0; // Temporary safeguard.
-                }
                 for (let i = 0; i < outputs.length; i++) {
                     for (let j = 0; j < outputs[i].length; j++) {
                         outputs[i][j][k] = output;
