@@ -42,8 +42,8 @@ class FMOperator
     {
         this._index = index;
         this._voice = voice;
-        this._frequencyRatio = 1.0;
         this._amplitude = 1.0;
+        this._multiple = 1.0;
 
         this._output = 0;
         this._phase = 0;
@@ -72,7 +72,7 @@ class FMOperator
         }
         this._output = this._amplitude * this._envelope
             * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
-        this._phase += this._frequencyRatio * this._voice.phaseIncrement;
+        this._phase += this._multiple * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
 
