@@ -77,6 +77,9 @@ class FMOperator
                 this._once = true;
                 console.debug("NaN in advance");
                 console.debug("modulation = %f", modulation);
+                console.debug("phase = %f", this._phase);
+                console.debug("amplitude = %f", this._amplitude);
+                console.debug("envelope = %f", this._envelope);
             }
             this._output = 0;
         }
