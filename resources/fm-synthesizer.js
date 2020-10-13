@@ -33,8 +33,14 @@ const A3_KEY = 69;
 
 class FMOperator
 {
-    constructor(voice)
+    /**
+     *
+     * @param {number} index an index for arrays
+     * @param {Object} voice voice parameters shared among operators
+     */
+    constructor(index, voice)
     {
+        this._index = index;
         this._voice = voice;
         this._frequencyRatio = 1.0;
         this._amplitude = 1.0;
@@ -46,18 +52,26 @@ class FMOperator
         this._envelope = 0;
     }
 
+    /**
+     * Index given to the constructor.
+     */
+    get index()
+    {
+        return this._index;
+    }
+
     get output()
     {
         return this._output;
     }
 
-    advance(index)
+    advance(modulation)
     {
-        if (index == null) {
-            index = 0;
+        if (modulation == null) {
+            modulation = 0;
         }
         this._output = this._amplitude * this._envelope
-            * Math.sin(2 * Math.PI * (this._phase + 4 * index));
+            * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
@@ -84,7 +98,8 @@ class FMSynthesizer extends AudioWorkletProcessor
             key: A3_KEY,
             phaseIncrement: 440 / sampleRate,
         };
-        this._operators = [0, 1, 2, 3].map(() => new FMOperator(this._voice));
+        this._operators = [0, 1, 2, 3]
+            .map((index) => new FMOperator(index, this._voice));
         this._connections = [
             [0, 0, 0, 0],
             [1, 0, 0, 0],
