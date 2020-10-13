@@ -133,7 +133,7 @@ class FMSynthesizer extends AudioWorkletProcessor
         if ("noteOn" in message) {
             this._voice.key = message.key;
             this._voice.phaseIncrement = 440 / sampleRate
-                * Math.pow((message.key - A3_KEY) / 12);
+                * Math.pow(2, (message.key - A3_KEY) / 12);
             this._operators
                 .forEach((o) => {
                     o.start();
