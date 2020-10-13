@@ -159,8 +159,7 @@ class FMSynthesizer extends AudioWorkletProcessor
 
                 let output = 0.125 * this._operators
                     .reduce((x, o) => x + this._mix[o.index] * o.output, 0);
-                if (!this._once && output != 0) {
-                    this._once = true;
+                if (output != 0) {
                     console.log(output);
                 }
                 for (let i = 0; i < outputs.length; i++) {
