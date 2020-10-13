@@ -73,7 +73,11 @@ class FMOperator
         this._output = this._amplitude * this._envelope
             * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
         if (Number.isNaN(this._output)) {
-            console.debug("NaN in advance");
+            if (!this._once) {
+                this._once = true;
+                console.debug("NaN in advance");
+                console.debug("modulation = %f", modulation);
+            }
             this._output = 0;
         }
         this._phase += this._frequencyRatio * this._voice.phaseIncrement;
