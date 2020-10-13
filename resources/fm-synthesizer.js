@@ -81,6 +81,7 @@ class FMSynthesizer extends AudioWorkletProcessor
     {
         super(options);
         this._voice = {
+            key: A3_KEY,
             phaseIncrement: 440 / sampleRate,
         };
         this._operators = [0, 1, 2, 3].map(() => new FMOperator(this._voice));
@@ -96,6 +97,9 @@ class FMSynthesizer extends AudioWorkletProcessor
             console.debug("data = %o", event.data);
             if ("noteOn" in event.data) {
                 console.debug("received a note-on");
+                this._voice.key = event.data.key;
+                this._voice.phaseIncrement = 440 / sampleRate
+                    * Math.pow((event.data.key - A3_KEY) / 12);
                 this._operators
                     .forEach((o) => {
                         o.start();
@@ -103,10 +107,12 @@ class FMSynthesizer extends AudioWorkletProcessor
             }
             if ("noteOff" in event.data) {
                 console.debug("received a note-off");
-                this._operators
-                    .forEach((o) => {
-                        o.stop();
-                    });
+                if (this._voice.key == event.data.key) {
+                    this._operators
+                        .forEach((o) => {
+                            o.stop();
+                        });
+                }
             }
         });
         this.port.start();
