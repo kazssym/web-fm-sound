@@ -95,27 +95,30 @@ class FMSynthesizer extends AudioWorkletProcessor
         // Gets note-ons/offs as messages.
         this.port.addEventListener("message", (event) => {
             console.debug("data = %o", event.data);
-            if ("noteOn" in event.data) {
-                console.debug("received a note-on");
-                this._voice.key = event.data.key;
-                this._voice.phaseIncrement = 440 / sampleRate
-                    * Math.pow((event.data.key - A3_KEY) / 12);
-                this._operators
-                    .forEach((o) => {
-                        o.start();
-                    });
-            }
-            if ("noteOff" in event.data) {
-                console.debug("received a note-off");
-                if (this._voice.key == event.data.key) {
-                    this._operators
-                        .forEach((o) => {
-                            o.stop();
-                        });
-                }
-            }
+            this.handleMessage(event.data);
         });
         this.port.start();
+    }
+
+    handleMessage(message)
+    {
+        if ("noteOn" in message) {
+            this._voice.key = message.key;
+            this._voice.phaseIncrement = 440 / sampleRate
+                * Math.pow((message.key - A3_KEY) / 12);
+            this._operators
+                .forEach((o) => {
+                    o.start();
+                });
+        }
+        if ("noteOff" in message) {
+            if (this._voice.key == message.key) {
+                this._operators
+                    .forEach((o) => {
+                        o.stop();
+                    });
+            }
+        }
     }
 
     /**
