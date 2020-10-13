@@ -100,12 +100,14 @@ class FMSynthesizer extends AudioWorkletProcessor
         };
         this._operators = [0, 1, 2, 3]
             .map((index) => new FMOperator(index, this._voice));
+
         this._connections = [
             [0, 0, 0, 0],
             [1, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 1, 0],
         ];
+        this._mix = [0, 0, 0, 1];
 
         // Gets note-ons/offs as messages.
         this.port.addEventListener("message", (event) => {
@@ -154,9 +156,12 @@ class FMSynthesizer extends AudioWorkletProcessor
                     }
                     this._operators[i].advance(index);
                 }
+
+                let output = 0.125 * this._operators
+                    .reduce((x, o) => x + this._mix[o.index] * o.output, 0);
                 for (let i = 0; i < outputs.length; i++) {
                     for (let j = 0; j < outputs[i].length; j++) {
-                        outputs[i][j][k] = 0.125 * this._operators[3].output;
+                        outputs[i][j][k] = output;
                     }
                 }
             }
