@@ -80,6 +80,7 @@ class FMOperator
                 console.debug("phase = %f", this._phase);
                 console.debug("amplitude = %f", this._amplitude);
                 console.debug("envelope = %f", this._envelope);
+                console.debug("phaseIncrement = %f", this._voice.phaseIncrement);
             }
             this._output = 0;
         }
