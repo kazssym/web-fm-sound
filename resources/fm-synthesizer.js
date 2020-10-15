@@ -170,9 +170,6 @@ class FMOperator
             while (this._started) {
                 yield level;
                 level *= this._decay2Rate;
-                if (level > 1.0) {
-                    level = 1.0;
-                }
             }
         }
         this._envelope = envelope.call(this);
