@@ -47,9 +47,9 @@ class FMOperator
 
         this._output = 0;
         this._phase = 0;
+
         this._started = false;
-        // TODO: make a real envelope generator.
-        this._envelope = 0;
+        this._envelope = null;
     }
 
     /**
@@ -100,10 +100,16 @@ class FMOperator
             modulation = 0;
         }
 
-        let amplitude = this._totalLevel;
-        amplitude *= this._envelope;
+        let output = 0;
+        if (this._envelope != null) {
+            let {value, done} = this._envelope.next();
+            if (!done) {
+                output = this._totalLevel * value
+                    * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
+            }
+        }
+        this._output = output;
 
-        this._output = amplitude * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
         this._phase += this._multiple * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
@@ -111,13 +117,19 @@ class FMOperator
     start()
     {
         this._started = true;
-        this._envelope = 1.0;
+
+        // TODO: make a real envelope generator.
+        function* envelope() {
+            while (this._started) {
+                yield 1.0;
+            }
+        }
+        this._envelope = envelope.call(this);
     }
 
     stop()
     {
         this._started = false;
-        this._envelope = 0;
     }
 }
 
