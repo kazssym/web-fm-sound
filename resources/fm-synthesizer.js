@@ -199,6 +199,8 @@ class FMSynthesizer extends AudioWorkletProcessor
 
         this._operators[2].totalLevel = 1.0;
         this._operators[3].totalLevel = 0.125;
+        this._operators[2].multiple = 1.0;
+        this._operators[3].multiple = 1.0;
 
         // Gets note-ons/offs as messages.
         this.port.addEventListener("message", (event) => {
