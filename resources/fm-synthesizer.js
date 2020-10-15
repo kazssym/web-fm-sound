@@ -42,7 +42,7 @@ class FMOperator
     {
         this._index = index;
         this._voice = voice;
-        this._totalLevel = 1.0;
+        this._totalLevel = 0.0;
         this._multiple = 1.0;
 
         this._decay1Rate = 1.0;
@@ -197,6 +197,9 @@ class FMSynthesizer extends AudioWorkletProcessor
         ];
         this._mix = [0, 0, 0, 1];
 
+        this._operators[2].totalLevel = 1.0;
+        this._operators[3].totalLevel = 0.125;
+
         // Gets note-ons/offs as messages.
         this.port.addEventListener("message", (event) => {
             console.debug("data = %o", event.data);
@@ -246,7 +249,7 @@ class FMSynthesizer extends AudioWorkletProcessor
                     this._operators[i].advance(modulation);
                 }
 
-                let output = 0.125 * this._operators
+                let output = this._operators
                     .reduce((x, o) => x + this._mix[o.index] * o.output,
                         0);
                 for (let i = 0; i < outputs.length; i++) {
