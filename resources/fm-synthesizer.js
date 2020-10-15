@@ -195,7 +195,7 @@ class FMSynthesizer extends AudioWorkletProcessor
             [0, 0, 0, 0],
             [0, 0, 1, 0],
         ];
-        this._mix = [0, 0, 0, 1];
+        this._mix = [0, 1, 0, 1];
 
         this._operators[2].totalLevel = 1.0;
         this._operators[3].totalLevel = 0.125;
