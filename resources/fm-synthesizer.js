@@ -100,7 +100,7 @@ class FMOperator
 
     set decay1Rate(decay1Rate)
     {
-        if (decay1Rate <= 0 || decay1Rate > 1.0) {
+        if (decay1Rate < 0 || decay1Rate > 1.0) {
             throw new Error("decay1Rate out of range");
         }
         this._decay1Rate = decay1Rate;
@@ -113,7 +113,7 @@ class FMOperator
 
     set decay1Level(decay1Level)
     {
-        if (decay1Level <= 0 || decay1Level > 1.0) {
+        if (decay1Level < 0 || decay1Level > 1.0) {
             throw new Error("decay1Level out of range");
         }
         this._decay1Level = decay1Level;
@@ -126,7 +126,7 @@ class FMOperator
 
     set decay2Rate(decay2Rate)
     {
-        if (decay2Rate <= 0 || decay2Rate > 1.0) {
+        if (decay2Rate < 0 || decay2Rate > 1.0) {
             throw new Error("decay2Rate out of range");
         }
         this._decay2Rate = decay2Rate;
