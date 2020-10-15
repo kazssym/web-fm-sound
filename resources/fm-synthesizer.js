@@ -45,6 +45,8 @@ class FMOperator
         this._totalLevel = 1.0;
         this._multiple = 1.0;
 
+        this._decay1Rate = 1.0;
+        this._decay1Level = 1.0;
         this._decay2Rate = Math.pow(2, -1 / sampleRate); // Placeholder.
 
         this._output = 0;
@@ -86,6 +88,45 @@ class FMOperator
     set multiple(multiple)
     {
         this._multiple = multiple;
+    }
+
+    get decay1Rate()
+    {
+        return this._decay1Rate;
+    }
+
+    set decay1Rate(decay1Rate)
+    {
+        if (decay1Rate <= 0 || decay1Rate > 1.0) {
+            throw new Error("decay1Rate out of range");
+        }
+        this._decay1Rate = decay1Rate;
+    }
+
+    get decay1Level()
+    {
+        return this._decay1Lvel;
+    }
+
+    set decay1Level(decay1Level)
+    {
+        if (decay1Level <= 0 || decay1Level > 1.0) {
+            throw new Error("decay1Level out of range");
+        }
+        this._decay1Level = decay1Level;
+    }
+
+    get decay2Rate()
+    {
+        return this._decay2Rate;
+    }
+
+    set decay2Rate(decay2Rate)
+    {
+        if (decay2Rate <= 0 || decay2Rate > 1.0) {
+            throw new Error("decay2Rate out of range");
+        }
+        this._decay2Rate = decay2Rate;
     }
 
     /**
