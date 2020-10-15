@@ -74,6 +74,9 @@ class FMOperator
 
     set totalLevel(totalLevel)
     {
+        if (totalLevel < 0 || totalLevel > 1.0) {
+            throw new Error("totalLevel out of range");
+        }
         this._totalLevel = totalLevel;
     }
 
