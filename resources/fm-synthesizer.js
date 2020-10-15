@@ -140,12 +140,8 @@ class FMOperator
         return this._output;
     }
 
-    advance(modulation)
+    advance(modulation = 0)
     {
-        if (modulation == null) {
-            modulation = 0;
-        }
-
         let output = 0;
         if (this._envelope != null) {
             let {value, done} = this._envelope.next();
