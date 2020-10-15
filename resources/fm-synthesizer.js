@@ -42,7 +42,7 @@ class FMOperator
     {
         this._index = index;
         this._voice = voice;
-        this._amplitude = 1.0;
+        this._totalLevel = 1.0;
         this._multiple = 1.0;
 
         this._output = 0;
@@ -63,14 +63,14 @@ class FMOperator
     /**
      * Amplitude of this operator.
      */
-    get amplitude()
+    get totalLevel()
     {
-        return this._amplitude;
+        return this._totalLevel;
     }
 
-    set amplitude(amplitude)
+    set totalLevel(totalLevel)
     {
-        this._amplitude = amplitude;
+        this._totalLevel = totalLevel;
     }
 
     /**
@@ -99,8 +99,11 @@ class FMOperator
         if (modulation == null) {
             modulation = 0;
         }
-        this._output = this._amplitude * this._envelope
-            * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
+
+        let amplitude = this._totalLevel;
+        amplitude *= this._envelope;
+
+        this._output = amplitude * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
         this._phase += this._multiple * this._voice.phaseIncrement;
         this._phase -= Math.floor(this._phase);
     }
