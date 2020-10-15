@@ -45,6 +45,8 @@ class FMOperator
         this._totalLevel = 1.0;
         this._multiple = 1.0;
 
+        this._decay2Rate = Math.pow(2, -1 / sampleRate); // Placeholder.
+
         this._output = 0;
         this._phase = 0;
 
@@ -120,8 +122,13 @@ class FMOperator
 
         // TODO: make a real envelope generator.
         function* envelope() {
+            let level = 1.0;
             while (this._started) {
-                yield 1.0;
+                yield level;
+                level *= this._decay2Rate;
+                if (level > 1.0) {
+                    level = 1.0;
+                }
             }
         }
         this._envelope = envelope.call(this);
