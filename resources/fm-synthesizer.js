@@ -163,6 +163,10 @@ class FMOperator
         // TODO: make a real envelope generator.
         function* envelope() {
             let level = 1.0;
+            while (this._started && level > this._decay1Level) {
+                yield level;
+                level *= this._decay1Rate;
+            }
             while (this._started) {
                 yield level;
                 level *= this._decay2Rate;
