@@ -240,9 +240,9 @@ class FMSynthesizer extends AudioWorkletProcessor
     /**
      * Processes audio samples.
      *
-     * @param {Float32Array[][]} _inputs input buffers
+     * @param {Float32Array[][]} _inputs input buffers to be ignored
      * @param {Float32Array[][]} outputs output buffers
-     * @return {boolean}
+     * @return {boolean} true
      */
     process(_inputs, outputs)
     {
