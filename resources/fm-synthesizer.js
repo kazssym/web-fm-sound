@@ -209,6 +209,7 @@ class FMSynthesizer extends AudioWorkletProcessor
         this._operators[1].multiple = 1.0;
         this._operators[2].multiple = 1.0;
         this._operators[3].multiple = 1.0;
+
         this._operators[0].decay1Rate = Math.pow(2, -4 / sampleRate);
         this._operators[1].decay1Rate = Math.pow(2, -2 / sampleRate);
         this._operators[2].decay1Rate = Math.pow(2, -4 / sampleRate);
