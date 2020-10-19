@@ -204,24 +204,24 @@ class FMSynthesizer extends AudioWorkletProcessor
         ];
 
         this._operators[0].totalLevel = 1.0;
-        this._operators[1].totalLevel = Math.pow(2, -3);
-        this._operators[2].totalLevel = 1.0;
-        this._operators[3].totalLevel = Math.pow(2, -3);
+        this._operators[1].totalLevel = Math.pow(2, -3.0);
+        this._operators[2].totalLevel = Math.pow(2, -0.5);
+        this._operators[3].totalLevel = Math.pow(2, -3.0);
         this._operators[0].multiple = 14.0;
         this._operators[1].multiple = 1.0;
         this._operators[2].multiple = 1.0;
         this._operators[3].multiple = 1.0;
 
-        this._operators[0].decay1Rate = Math.pow(2, -4 / sampleRate);
-        this._operators[1].decay1Rate = Math.pow(2, -2 / sampleRate);
-        this._operators[2].decay1Rate = Math.pow(2, -4 / sampleRate);
-        this._operators[3].decay1Rate = Math.pow(2, -2 / sampleRate);
-        this._operators[0].decay1Level = Math.pow(2, -0.5);
-        this._operators[1].decay1Level = Math.pow(2, -0.5);
+        this._operators[0].decay1Rate = Math.pow(2, -8.0 / sampleRate);
+        this._operators[1].decay1Rate = Math.pow(2, -3.0 / sampleRate);
+        this._operators[2].decay1Rate = Math.pow(2, -1.0 / sampleRate);
+        this._operators[3].decay1Rate = Math.pow(2, -1.0 / sampleRate);
+        this._operators[0].decay1Level = Math.pow(2, -1.0);
+        this._operators[1].decay1Level = Math.pow(2, -1.0);
         this._operators[2].decay1Level = 0;
         this._operators[3].decay1Level = 0;
-        this._operators[0].decay2Rate = Math.pow(2, -2 / sampleRate);
-        this._operators[1].decay2Rate = 0;
+        this._operators[0].decay2Rate = Math.pow(2, -4.0 / sampleRate);
+        this._operators[1].decay2Rate = Math.pow(2, -4.0 / sampleRate);
         this._operators[2].decay2Rate = 0;
         this._operators[3].decay2Rate = 0;
 
