@@ -29,6 +29,8 @@
 
 // This file is a module script and shall be in strict mode by default.
 
+const TWO_PI = 2 * Math.PI;
+
 const A3_KEY = 69;
 
 class FMOperator
@@ -147,7 +149,7 @@ class FMOperator
             let {value, done} = this._envelope.next();
             if (!done) {
                 output = this._totalLevel * value
-                    * Math.sin(2 * Math.PI * (this._phase + 4 * modulation));
+                    * Math.sin(TWO_PI * (this._phase + 4 * modulation));
             }
         }
         this._output = output;
