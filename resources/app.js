@@ -53,10 +53,30 @@ function sendNoteOff()
 }
 
 /**
+ * Handles the `change` events for the total level controls.
+ *
+ * @param {Event} event
+ */
+function handleTotalLevelChange(event) {
+    let value = event.target.value;
+    if (value == 0) {
+        event.target.title = "-∞ dB";
+    }
+    else {
+        event.target.title = `${0.75 * (value - 127)} dB`;
+    }
+}
+
+/**
  * Binds UI commands.
  */
 function bindCommands()
 {
+    let form = document.forms["demo"];
+    for (let e of form["totalLevel"]) {
+        e.addEventListener("change", handleTotalLevelChange);
+    }
+
     for (let e of document.getElementsByClassName("app-command-trigger")) {
         e.addEventListener("mousedown", sendNoteOn);
         e.addEventListener("mouseup", sendNoteOff);
