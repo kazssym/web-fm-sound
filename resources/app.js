@@ -24,6 +24,9 @@
  * @module app.js
  */
 
+/**
+ * Sends a note-on message.
+ */
 function sendNoteOn()
 {
     if (synthesizer.context.state == "suspended") {
@@ -38,6 +41,9 @@ function sendNoteOn()
     });
 }
 
+/**
+ * Sends a note-off message.
+ */
 function sendNoteOff()
 {
     if (synthesizer.context.state == "suspended") {
