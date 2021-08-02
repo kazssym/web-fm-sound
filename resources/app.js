@@ -25,15 +25,22 @@
  */
 
 /**
- * Sends a note-on message.
+ * Resumes the synthesizer engine if suspended.
  */
-function sendNoteOn()
+function resumeSynthesizer()
 {
     if (synthesizer.context.state == "suspended") {
         synthesizer.context.resume();
     }
+}
 
+/**
+ * Sends a note-on message.
+ */
+function sendNoteOn()
+{
     console.debug("note on");
+    resumeSynthesizer();
     synthesizer.port.postMessage({
         noteOn: {
             key: 69,
@@ -46,11 +53,8 @@ function sendNoteOn()
  */
 function sendNoteOff()
 {
-    if (synthesizer.context.state == "suspended") {
-        synthesizer.context.resume();
-    }
-
     console.debug("note off");
+    resumeSynthesizer();
     synthesizer.port.postMessage({
         noteOff: {
             key: 69,
