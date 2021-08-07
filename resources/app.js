@@ -85,6 +85,7 @@ function bindCommands()
     let form = document.forms["demo"];
     for (let e of form["totalLevel"]) {
         e.addEventListener("change", handleTotalLevelChange);
+        handleTotalLevelChange({target: e});
     }
 
     for (let e of document.getElementsByClassName("app-command-trigger")) {
